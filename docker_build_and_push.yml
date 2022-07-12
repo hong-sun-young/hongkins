@@ -1,11 +1,11 @@
 - hosts: localhost
   gather_facts: no
 
-  vars: 
+  vars:
     docker_id: hooong2
-    docker_key: c94740f6-de78-4573-9190-8fdd313bd04c
+    docker_key: "{{ lookup('env', 'DOCKER_KEY') }}"
     container_name: myweb
-    image_name: "{{ docker_id }}/goorm-myweb"
+    image_name: "{{ docker_id }}/goorm-myweb:{{ image_tag }}"
 
   tasks:
   - block:
@@ -21,6 +21,7 @@
           rm: yes
         name: "{{ image_name }}"
         push: yes
+        source: build
     - name: Create/Start Container
       docker_container:
         name: "{{ container_name }}"
@@ -29,10 +30,9 @@
           - "8080:8080"
         pull: yes
         recreate: yes
-        state: started
+        stat: started
     always:
     - name: Logout to Docker Hub
       docker_login:
         username: "{{ docker_id }}"
         state: absent
-
