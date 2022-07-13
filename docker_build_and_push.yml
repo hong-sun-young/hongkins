@@ -3,10 +3,9 @@
 
   vars:
     docker_id: hooong2
-    image_tag: latest
     docker_key: "{{ lookup('env', 'DOCKER_KEY') }}"
     container_name: myweb
-    image_name: "{{ docker_id }}/goorm-myweb:{{ image_tag }}"
+    image_name: "{{ docker_id }}/goorm-myweb
 
   tasks:
   - block:
