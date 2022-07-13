@@ -30,7 +30,7 @@
           - "8080:8080"
         pull: yes
         recreate: yes
-        stat: started
+        state: started
     always:
     - name: Logout to Docker Hub
       docker_login:
